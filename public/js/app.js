@@ -1,22 +1,16 @@
 /* eslint-disable no-param-reassign, operator-assignment */
 
 class ProductList extends React.Component {
-    constructor(props) {
-      super(props);
-  
-      this.state = {
+    state = {
         products: [],
       };
-  
-      this.handleProductUpVote = this.handleProductUpVote.bind(this);
-    }
   
     componentDidMount() {
       this.setState({ products: Seed.products });
     }
   
     // Inside `ProductList`
-    handleProductUpVote(productId) {
+    handleProductUpVote = (productId) => {
       const nextProducts = this.state.products.map((product) => {
         if (product.id === productId) {
           return Object.assign({}, product, {
