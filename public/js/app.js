@@ -1,5 +1,10 @@
 
 class ProductList extends React.Component {
+    // add function - up-vote logs a message to console
+    handleProductUpVote(productId) {
+        console.log(productId + ' was upvoted.');
+    }
+
     render() {
         const products = Seed.products.sort((a, b) => (
             b.votes - a.votes
@@ -14,6 +19,8 @@ class ProductList extends React.Component {
                 votes={product.votes}
                 submitterAvatarUrl={product.submitterAvatarUrl}
                 productImageUrl={product.productImageUrl}
+                // pass up-vote function as a prop
+                onVote={this.handleProductUpVote}
             />
         ));
 
@@ -26,6 +33,17 @@ class ProductList extends React.Component {
   }
   
   class Product extends React.Component {
+      // add constructor to bind this to the component
+        constructor(props) {
+            super(props);
+            this.handleUpVote = this.handleUpVote.bind(this);
+        }
+
+      // a function to call the prop-function
+      handleUpVote () {
+          this.props.onVote(this.props.id);
+      }
+      
     render() {
       return (
         <div className='item'>
@@ -34,7 +52,7 @@ class ProductList extends React.Component {
           </div>
           <div className='middle aligned content'>
             <div className='header'>
-              <a>
+              <a onClick={this.handleUpVote}>
                 <i className='large caret up icon' />
               </a>
               {this.props.votes}
